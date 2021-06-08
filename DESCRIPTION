@@ -13,3 +13,5 @@ Imports:
     MASS,
     nlme,
     stats
+URL: https://github.com/ketutdika/geoSAE
+BugReports: https://github.com/ketutdika/geoSAE/issues
