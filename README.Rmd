@@ -18,37 +18,61 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of geoSAE is to estimate Eblup's and MSE using Geoadditive Small Area Model
+This function is an extension of the Small Area Estimation (SAE) model. Geoadditive Small Area Model is a combination of the geoadditive model with the Small Area Estimation (SAE) model, by adding geospatial information to the SAE model. 
+
+## Authors
+
+Ketut Karang Pradnyadika, Ika Yuni Wulansari
+
+## Maintainer
+
+Ketut Karang Pradnyadika <221709776@stis.ac.id>
 
 ## Installation
 
-You can install the released version of geoSAE from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("geoSAE")
-```
+You can install the released version of geoSAE from [CRAN](https://CRAN.R-project.org) or find my github repository [Github](https://github.com/ketutdika)
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+``` {r}
+#Load the dataset for unit level
 library(geoSAE)
-## basic example code
+data(dataUnit)
+
+#Load the dataset for spline-2
+data(zspline)
+
+#Load the dataset for area level
+data(dataArea)
+
+#Construct the data frame
+y       <- dataUnit$y
+x1      <- dataUnit$x1
+x2      <- dataUnit$x2
+x3      <- dataUnit$x3
+formula <- y~x1+x2+x3
+zspline <- as.matrix(zspline[,1:6])
+dom     <- dataUnit$area
+xmean   <- cbind(1,dataArea[,3:5])
+zmean   <- dataArea[,7:12]
+number  <- dataUnit$number
+area    <- dataUnit$area
+data    <- data.frame(number, area, y, x1, x2, x3)
+
+#Estimate EBLUP
+eblup_geosae <- eblupgeo(formula, zspline, dom, xmean, zmean, data)
+eblup_geosae$eblup
+ 
+#Estimate MSE
+mse_geosae <- pbmsegeo(formula,zspline,dom,xmean,zmean,data,B=100)
+mse_geosae$mse
+ 
+## eblup_geosae$eblup        #to see the result of EBLUPs with Geoadditive Small Area Model each area
+## mse_geosae$mse            #to see the result of MSE with Geoadditive Small Area Model each area
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## References
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+- Rao, J.N.K & Molina. (2015). Small Area Estimation 2nd Edition. New York: John Wiley and Sons, Inc.
+- Bocci, C. (2010). Geoadditive small area model for the estimation of consumption expenditure in albania. Italy: University of Florence.
+- Ardiansyah, M., Djuraidah, A., & Kurnia, A. (2018). Pendugaan Area Kecil Data Produktivitas Tanaman Padi Dengan Geoadditive Small Area Model. Jurnal Penelitian Pertanian Tanaman Pangan, 2(2), 101-110.

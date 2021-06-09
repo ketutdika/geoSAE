@@ -3,13 +3,45 @@
 #' This function calculates EBLUP's based on unit level using Geoadditive Small Area Model
 #'
 #' @param formula the model that to be fitted
-#' @param zspline matrix that used in model for random effect of spline-2
-#' @param dom domain codes
-#' @param xmean matrix of auxiliary variables means for each domains
-#' @param zmean matrix of spline-2 means for each domains
+#' @param zspline n*k matrix that used in model for random effect of spline-2 (n is the number of observations, and k is the number of knots used)
+#' @param dom a*1 vector with domain codes (a is the number of small areas)
+#' @param xmean a*p matrix of auxiliary variables means for each domains (a is the number of small areas, and p is the number of auxiliary variables)
+#' @param zmean a*k matrix of spline-2 means for each domains
 #' @param data data unit level that used as data frame that containing the variables named in formula and dom
 #'
+#' @return This function returns a list of the following objects:
+#'    \item{eblup}{A Vector with a list of EBLUP with Geoadditive Small Area Model}
+#'    \item{fit}{A list of components of the formed Geoadditive Small Area Model that containing the following objects such as model structure of the model, coefficients of the model, method, and residuals}
+#'    \item{sigma2}{Variance (sigma square) of random effect and error with Geoadditive Small Area Model}
+#'
 #' @export eblupgeo
+#'
+#' @examples
+#' #Load the dataset for unit level
+#' data(dataUnit)
+#'
+#' #Load the dataset for spline-2
+#' data(zspline)
+#'
+#' #Load the dataset for area level
+#' data(dataArea)
+#'
+#' #Construct the data frame
+#' y       <- dataUnit$y
+#' x1      <- dataUnit$x1
+#' x2      <- dataUnit$x2
+#' x3      <- dataUnit$x3
+#' formula <- y~x1+x2+x3
+#' zspline <- as.matrix(zspline[,1:6])
+#' dom     <- dataUnit$area
+#' xmean   <- cbind(1,dataArea[,3:5])
+#' zmean   <- dataArea[,7:12]
+#' number  <- dataUnit$number
+#' area    <- dataUnit$area
+#' data    <- data.frame(number, area, y, x1, x2, x3)
+#'
+#' #Estimate EBLUP
+#' eblup_geosae <- eblupgeo(formula, zspline, dom, xmean, zmean, data)
 #'
 #' @import stats
 #' @import nlme
@@ -43,7 +75,7 @@ eblupgeo<- function (formula, zspline, dom, xmean, zmean, data)
 
   ZBlock=pdBlocked(list(pdIdent(~zspline-1),pdIdent(~area-1)))
   dataMu=groupedData(y~1+x1+x2+x3|dom,data=data.frame(y,x1,x2,x3,z,obs))
-  fit<-lme(fixed=y~x1+x2+x3, data=dataMu, random=ZBlock, control = lmeControl(opt = "optim"))
+  fit<-lme(fixed=y~x1+x2+x3, data=dataMu, random=ZBlock)
   result$fit<-fit
 
   beta<-fixed.effects(fit)

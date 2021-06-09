@@ -2,9 +2,9 @@ Package: geoSAE
 Type: Package
 Title: GEOADDITIVE SMALL AREA MODEL
 Version: 0.1.0
-Author: Ketut Karang Pradnyadika
-Maintainer: Ketut Karang Pradnyadika <pradnyadika09@gmail.com>
-Description: Function for adding geospasial information into Small Area Estimation (SAE) Model.
+Author: Ketut Karang Pradnyadika, Ika Yuni Wulansari
+Maintainer: Ketut Karang Pradnyadika <221709776@stis.ac.id>
+Description: This function is an extension of the Small Area Estimation (SAE) model. Geoadditive Small Area Model is a combination of the geoadditive model with the Small Area Estimation (SAE) model, by adding geospatial information to the SAE model. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -15,3 +15,5 @@ Imports:
     stats
 URL: https://github.com/ketutdika/geoSAE
 BugReports: https://github.com/ketutdika/geoSAE/issues
+Depends: 
+    R (>= 2.10)
