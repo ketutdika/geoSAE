@@ -5,12 +5,12 @@
 \alias{zspline}
 \title{Z-Spline}
 \format{
-A data frame with 210 observations on the following 6 variables (number of knots used)
+A data frame with 210 observations on the following 10 variables (number of knots used)
 }
 \usage{
 zspline
 }
 \description{
-This dataset is obtained from the calculation of the optimum GCV (Generalized Cross Validation), where there are 6 knots that have the lowest GCV value.
+This dataset is obtained from the calculation of the optimum GCV (Generalized Cross Validation), where there are 10 knots that have the lowest GCV value.
 }
 \keyword{datasets}

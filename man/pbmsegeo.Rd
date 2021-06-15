@@ -35,6 +35,7 @@ This function returns a list of the following objects:
 This function calculates MSE of EBLUP's based on unit level using Geoadditive Small Area Model
 }
 \examples{
+\donttest{
 #Load the dataset for unit level
 data(dataUnit)
 
@@ -60,4 +61,5 @@ data    <- data.frame(number, area, y, x1, x2, x3)
 
 #Estimate MSE
 mse_geosae <- pbmsegeo(formula,zspline,dom,xmean,zmean,data,B=100)
+}
 }

@@ -22,6 +22,7 @@
 #' @export pbmsegeo
 #'
 #' @examples
+#' \donttest{
 #' #Load the dataset for unit level
 #' data(dataUnit)
 #'
@@ -47,6 +48,7 @@
 #'
 #' #Estimate MSE
 #' mse_geosae <- pbmsegeo(formula,zspline,dom,xmean,zmean,data,B=100)
+#' }
 
 pbmsegeo<-function(formula, zspline, dom, xmean, zmean, data, B=100)
 {
@@ -92,9 +94,7 @@ pbmsegeo<-function(formula, zspline, dom, xmean, zmean, data, B=100)
   summse.pb<-NULL
   error<-NULL
   b<-1
-  seed<-1000
   while(b<=B){
-    set.seed(seed)
     u.boot <- rnorm(m,0,sqrt(sigma2.u))
     gamma.boot <- rnorm(k, 0, sqrt(sigma2.gamma))
     e.boot <- rnorm(n, 0, sqrt(sigma2.e))
@@ -105,9 +105,7 @@ pbmsegeo<-function(formula, zspline, dom, xmean, zmean, data, B=100)
     selisih<-(model.boot$eblup - theta.boot)^2
     error<-rbind(error,t(selisih))
     b=b+1
-    seed<-seed+10*b
   }
-
   result$mse<-colMeans(error, na.rm=T)
   return(result)
 }

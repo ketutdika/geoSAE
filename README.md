@@ -28,8 +28,9 @@ You can install the released version of geoSAE from
 ## Example
 
 ``` r
-#Load the dataset for unit level
 library(geoSAE)
+
+#Load the dataset for unit level
 data(dataUnit)
 
 #Load the dataset for spline-2
@@ -44,10 +45,10 @@ x1      <- dataUnit$x1
 x2      <- dataUnit$x2
 x3      <- dataUnit$x3
 formula <- y~x1+x2+x3
-zspline <- as.matrix(zspline[,1:6])
+zspline <- as.matrix(zspline[,1:10])
 dom     <- dataUnit$area
-xmean   <- cbind(1,dataArea[,3:5])
-zmean   <- dataArea[,7:12]
+xmean   <- cbind(1,dataArea[,2:4])
+zmean   <- dataArea[,5:14]
 number  <- dataUnit$number
 area    <- dataUnit$area
 data    <- data.frame(number, area, y, x1, x2, x3)
@@ -56,30 +57,30 @@ data    <- data.frame(number, area, y, x1, x2, x3)
 eblup_geosae <- eblupgeo(formula, zspline, dom, xmean, zmean, data)
 eblup_geosae$eblup
 #>           [,1]
-#>  [1,] 29.04625
-#>  [2,] 33.43651
-#>  [3,] 34.66706
-#>  [4,] 33.81857
-#>  [5,] 23.52744
-#>  [6,] 22.89752
-#>  [7,] 21.86852
-#>  [8,] 21.26004
-#>  [9,] 33.73404
-#> [10,] 38.43505
-#> [11,] 33.77393
-#> [12,] 28.98660
-#> [13,] 32.29918
-#> [14,] 24.31817
-#> [15,] 31.23797
+#>  [1,] 28.80487
+#>  [2,] 34.27508
+#>  [3,] 35.32142
+#>  [4,] 33.04335
+#>  [5,] 23.91203
+#>  [6,] 21.68321
+#>  [7,] 20.40650
+#>  [8,] 19.82616
+#>  [9,] 34.74351
+#> [10,] 39.99695
+#> [11,] 35.20031
+#> [12,] 28.46516
+#> [13,] 31.94645
+#> [14,] 24.12550
+#> [15,] 30.97060
  
 #Estimate MSE
 mse_geosae <- pbmsegeo(formula,zspline,dom,xmean,zmean,data,B=100)
 #> 
 #> Bootstrap procedure with B = 100 iterations starts.
 mse_geosae$mse
-#>  [1]  2.052566  1.978709  2.231913 10.926587  1.480916  4.157471  3.172412
-#>  [8]  1.839984  2.466619  1.563998  3.051762 16.937056 16.238457  2.648152
-#> [15]  5.538344
+#>  [1]  3.9030125  3.6740805  2.4060875 11.4583413  1.8236213  5.8924137
+#>  [7]  1.9357287  1.3473704  3.9215650  0.7674256  2.4733603 15.6073802
+#> [13] 10.4960697  1.8853202  4.1279470
  
 ## eblup_geosae$eblup        #to see the result of EBLUPs with Geoadditive Small Area Model each area
 ## mse_geosae$mse            #to see the result of MSE with Geoadditive Small Area Model each area
@@ -89,8 +90,9 @@ mse_geosae$mse
 
 -   Rao, J.N.K & Molina. (2015). Small Area Estimation 2nd Edition. New
     York: John Wiley and Sons, Inc.
--   Bocci, C. (2010). Geoadditive small area model for the estimation of
-    consumption expenditure in albania. Italy: University of Florence.
--   Ardiansyah, M., Djuraidah, A., & Kurnia, A. (2018). Pendugaan Area
-    Kecil Data Produktivitas Tanaman Padi Dengan Geoadditive Small Area
-    Model. Jurnal Penelitian Pertanian Tanaman Pangan, 2(2), 101-110.
+-   Bocci, C., & Petrucci, A. (2016). Spatial information and
+    geoadditive small area models. Analysis of poverty data by small
+    area estimation, 245-259.
+-   Ardiansyah, M., Djuraidah, A., & Kurnia, A. (2018). PENDUGAAN AREA
+    KECIL DATA PRODUKTIVITAS TANAMAN PADI DENGAN GEOADDITIVE SMALL AREA
+    MODEL. Jurnal Penelitian Pertanian Tanaman Pangan, 2(2), 101-110.

@@ -35,8 +35,9 @@ You can install the released version of geoSAE from [CRAN](https://CRAN.R-projec
 ## Example
 
 ``` {r}
-#Load the dataset for unit level
 library(geoSAE)
+
+#Load the dataset for unit level
 data(dataUnit)
 
 #Load the dataset for spline-2
@@ -51,10 +52,10 @@ x1      <- dataUnit$x1
 x2      <- dataUnit$x2
 x3      <- dataUnit$x3
 formula <- y~x1+x2+x3
-zspline <- as.matrix(zspline[,1:6])
+zspline <- as.matrix(zspline[,1:10])
 dom     <- dataUnit$area
-xmean   <- cbind(1,dataArea[,3:5])
-zmean   <- dataArea[,7:12]
+xmean   <- cbind(1,dataArea[,2:4])
+zmean   <- dataArea[,5:14]
 number  <- dataUnit$number
 area    <- dataUnit$area
 data    <- data.frame(number, area, y, x1, x2, x3)
@@ -74,5 +75,7 @@ mse_geosae$mse
 ## References
 
 - Rao, J.N.K & Molina. (2015). Small Area Estimation 2nd Edition. New York: John Wiley and Sons, Inc.
-- Bocci, C. (2010). Geoadditive small area model for the estimation of consumption expenditure in albania. Italy: University of Florence.
-- Ardiansyah, M., Djuraidah, A., & Kurnia, A. (2018). Pendugaan Area Kecil Data Produktivitas Tanaman Padi Dengan Geoadditive Small Area Model. Jurnal Penelitian Pertanian Tanaman Pangan, 2(2), 101-110.
+- Bocci, C., & Petrucci, A. (2016). Spatial information and geoadditive small area models. Analysis of poverty data by small area estimation, 245-259.
+- Ardiansyah, M., Djuraidah, A., & Kurnia, A. (2018). PENDUGAAN AREA KECIL DATA PRODUKTIVITAS TANAMAN PADI DENGAN GEOADDITIVE SMALL AREA MODEL. Jurnal Penelitian Pertanian Tanaman Pangan, 2(2), 101-110. 
+
+
